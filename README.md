@@ -21,3 +21,33 @@ C000 XRA A ; Clear the accumulator
  C00F INX H ; Point towards next memory location
  C010 MOV M , C ; Store Carry in next consecutive memory location
  C011 RST 1 ; Stop Program Execution
+
+
+
+2. Subtraction
+
+
+
+
+
+C000 XRA A ; Clear the accumulator
+ C001 LXI H , CO30H ; Initialize memory pointer to subtrahend
+ C002 30
+ C003 C0
+ C004 MOV B , M ;Copy subtrahend to Reg. B
+ C005 INX H ;Point towards next memory location
+ C006 MOV A , M ; Copy minuend to Reg.A
+ C007 SUB B ; Subtract contents of Reg. B from Contents of Reg. A 
+ C008 JP DOWN ;If S=0,Transfer Program Control to Label DOWN
+ C009 0E
+ C00A C0
+ C00B CMA ;Find 1’S Compliment of contents of Reg.A
+ C00C ADI 01H ;ADD 01H into contents of Reg.A
+ C00D 01
+ C00E DOWN: INX H ;Point towards next memory location
+ C00F MOV M , A ;Store absolute difference into memory location
+ C010 CF RST 1 ;Stop Program Execution
+
+
+
+ 
