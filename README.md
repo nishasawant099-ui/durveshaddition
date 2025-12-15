@@ -50,4 +50,34 @@ C000 XRA A ; Clear the accumulator
 
 
 
- 
+3. Multiplication
+
+
+
+
+
+
+
+C000 XRA A ; Clear the accumulator
+ C001 MVI D , 00 H ;Store Initial Carry in Reg.D
+ C002 00
+ C003 LXI H , CO30H ; Initialize memory pointer to multiplicand
+ C004 30
+ C005 C0
+ C006 MOV B , M ;Copy multiplicand into Reg.B
+ C007 INX H ;Point towards next memory location
+ C008 MOV C , M ;Copy multiplier into Reg.C
+ C009 UP: ADD B ;Add multiplicand into contents of Reg.A
+ C00A JNC DOWN ;If CY = 0, Transfer Program Control to Label DOWN
+ C00B 0E 
+ C00C C0
+ C00D INR D ; Increment Carry by 1
+ C00E DOWN: DCR C ;Decrement contents of Reg.C by 1
+ C00F JNZ UP ; If Z = 0 , Transfer Program Control to Label UP
+ C010 09
+ C011 C0
+ C012 INX H ;Point towards next memory location
+ C013 MOV M , A ;Copy Product into Memory location C032H
+ C014 INX H ;Point towards next memory location
+ C015 MOV M , D ;Store Carry into next memory location
+ C016 CF RST 1 ;Stop Program Execution
