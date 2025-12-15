@@ -81,3 +81,35 @@ C000 XRA A ; Clear the accumulator
  C014 INX H ;Point towards next memory location
  C015 MOV M , D ;Store Carry into next memory location
  C016 CF RST 1 ;Stop Program Execution
+
+
+
+
+4. Division
+
+
+
+
+C000 XRA A ;Clear accumulator to store initial Remainder 
+ C001 MVI C , 00H ;Store initial Quotient as 00H in Reg.C 
+ C002 00
+ C003 LXI H , C030H ;Point towards Dividend at memory location C030H 
+ C004 30
+ C005 C0
+ C006 MOV A , M ;Copy Dividend into Reg.A
+ C007 INX H ;Point towards next memory location
+ C008 UP : CMP M ;Compare Dividend with Divisor
+ C009 JC DOWN ; If Dividend < Divisor i.e.CY = 1 GO TO Label DOWN
+ C00A 11
+ C00B C0
+ C00C SUB M ;If Dividend > Divisor i.e CY = 0 Subtract Divisor from 
+Dividend
+ C00D INR C ;Increment Quotient by 1
+ C00E JMP UP ; Transfer program control to Label UP
+ C00F 08
+ C010 C0
+ C011 DOWN : INX H ;Point towards next memory location
+ C012 MOV M , C ;Store the Quotient in current memory location
+ C013 INX H ;Point towards next memory location
+ C014 MOV M , A ;Store Remainder in current memory location
+ C015 CF RST 1 ;Stop Program Execution
